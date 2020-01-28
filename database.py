@@ -32,3 +32,5 @@ def createDB():
     for name in fields:
         config.write(name + ',' + str(fields[name]) + '\n')
     config.close()
+    overflow = open(csvFilename + '.overflow', 'w')
+    overflow.close()
