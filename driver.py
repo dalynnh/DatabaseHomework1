@@ -17,9 +17,9 @@ def main():
     if choice == '1':
         database.createDB()
     elif choice == '2':
-        print('Open db')
+        database.openDB()
     elif choice == '3':
-        print('Close db')
+        database.closeDB()
     elif choice == '4':
         print('Display record')
     elif choice == '5':
