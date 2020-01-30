@@ -21,7 +21,7 @@ def main():
     elif choice == '3':
         database.closeDB()
     elif choice == '4':
-        print('Display record')
+        database.displayRecord()
     elif choice == '5':
         print('Update record')
     elif choice == '6':

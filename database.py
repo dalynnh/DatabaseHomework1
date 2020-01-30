@@ -1,3 +1,5 @@
+import helper
+
 data = None
 config = None
 overflow = None
@@ -13,7 +15,7 @@ def createDB():
         'state': 2,
         'zip': 5,
         'employee': 10,
-        'totalRecordSize': 76
+        'totalRecordSize': 77
     }
     numRecords = 0
     csvFile = open(csvFilename + '.csv', 'r')
@@ -67,3 +69,21 @@ def closeDB():
         overflow = None
     else:
         print('There are no databases currently open.')
+
+def displayRecord():
+    global data, config, overflow
+    if data:
+        print('Enter the name of the record you would like to search for. Limited to 35 characters.')
+        name = input()
+        recordSize = 0
+        numRecords = 0
+        for line in config.readlines():
+            lineArr = line.split(',')
+            if lineArr[0] == 'totalRecordSize':
+                recordSize = int(lineArr[1])
+                print(recordSize)
+            elif lineArr[0] == 'numRecords':
+                numRecords = int(lineArr[1])
+        print(helper.binarySearch(data, name, numRecords, recordSize))
+    else:
+        print('There are no databases currently open. Please open a database to display a record.')
