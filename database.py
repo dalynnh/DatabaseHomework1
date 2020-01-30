@@ -87,3 +87,11 @@ def displayRecord():
         print(helper.binarySearch(data, name, numRecords, recordSize))
     else:
         print('There are no databases currently open. Please open a database to display a record.')
+
+def createReport():
+    global data, config, overflow
+
+    report = open(report.txt,'w')
+
+    for i in range(10):
+        
