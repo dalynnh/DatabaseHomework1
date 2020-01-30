@@ -22,7 +22,6 @@ def binarySearch(data, name, totalRecords, size):
         record = getRecord(data, int(middle))
         recordName = record[4:38]
         recordName = recordName.replace('-', '')
-        print(recordName)
         if recordName == name:
             found = True
         elif recordName < name:
