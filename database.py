@@ -27,7 +27,7 @@ def createDB():
                     write = record[i][:fields[field]]
                 else:
                     write = record[i]
-                    for j in range(fields[field] - len(write)):
+                    while(range(fields[field] - len(write))):
                         write = write + '-'
                 data.write(write)
                 i += 1
