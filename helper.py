@@ -9,12 +9,12 @@ def getRecord(data, recordNum):
         record = data.readline()
     return record
 
-def binarySearch(data, name, totalRecords, size):
+def binarySearch(data, name, fields):
     global numRecords, recordSize
-    numRecords = totalRecords
-    recordSize = size
+    numRecords = fields['numRecords']
+    recordSize = fields['totalRecordSize']
     low = 0
-    high = totalRecords -1
+    high = numRecords - 1
     record = ''
     found = False
     while not found and high >= low:
@@ -23,13 +23,19 @@ def binarySearch(data, name, totalRecords, size):
         recordName = record[4:38]
         recordName = recordName.replace('-', '')
         if recordName == name:
+            count = 0
+            for name in fields:
+                if name != 'totalRecordSize' and name != 'numRecords':
+                    value = record[count:fields[name] + count].replace('-', '')
+                    print(name + ': ' + value)
+                    count += fields[name]
             found = True
         elif recordName < name:
             low = middle
         else: 
             high = middle
-    if (found):
-        return record
-    else:
-        return 'Could not find record.'
+    return found
+
+def linearSearch(data, name):
+    print(name)
     

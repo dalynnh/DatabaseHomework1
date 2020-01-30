@@ -72,18 +72,15 @@ def closeDB():
 
 def displayRecord():
     global data, config, overflow
+    fields = {}
     if data:
         print('Enter the name of the record you would like to search for. Limited to 35 characters.')
         name = input()
-        recordSize = 0
-        numRecords = 0
         for line in config.readlines():
             lineArr = line.split(',')
-            if lineArr[0] == 'totalRecordSize':
-                recordSize = int(lineArr[1])
-                print(recordSize)
-            elif lineArr[0] == 'numRecords':
-                numRecords = int(lineArr[1])
-        print(helper.binarySearch(data, name, numRecords, recordSize))
+            fields[lineArr[0]] = int(lineArr[1])
+        if not helper.binarySearch(data, name, fields):
+            if not helper.linearSearch(overflow, name):
+                print('Could not find record.')
     else:
         print('There are no databases currently open. Please open a database to display a record.')
