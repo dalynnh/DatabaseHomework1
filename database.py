@@ -72,7 +72,7 @@ def closeDB():
         print('There are no databases currently open.')
 
 def displayRecord():
-    global data, config, overflow, fields
+    global data, overflow, fields
     if data:
         setFields()
         print('Enter the name of the record you would like to search for. Limited to 35 characters.')
@@ -90,7 +90,7 @@ def displayRecord():
         print('There are no databases currently open. Please open a database to display a record.')
 
 def updateRecord():
-    global data, config, overflow, fields
+    global data, overflow, fields
     if data:
         setFields()
         print('Enter the name of the record you would like to update. Limited to 35 characters.')
@@ -105,10 +105,15 @@ def updateRecord():
             else:
                 print('No record was found with name (' + name + ')')
     else:
-        print('There are no databases currently open. Please open a database to display a record.')
+        print('There are no databases currently open. Please open a database to update a record.')
 
 def addRecord():
-    pass
+    global overflow, fields
+    if overflow:
+        setFields()
+        helper.addRecord(overflow, fields)
+    else:
+        print('There are no databases currently open. Please open a database to add a record.')
 
 def deleteRecord():
     pass

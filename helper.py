@@ -12,9 +12,7 @@ def getRecord(data, recordNum):
     return record
 
 def binarySearch(data, name, fields):
-    global numRecords, recordSize
-    numRecords = fields['numRecords']
-    recordSize = fields['totalRecordSize']
+    setGlobals(fields)
     low = 0
     high = numRecords - 1
     record = ''
@@ -33,7 +31,7 @@ def binarySearch(data, name, fields):
 def linearSearch(data, name, fields):
     return False
 
-def updateRecord(data, record: Record, fields):
+def updateRecord(data, record, fields):
     record.updateRecord()
     final = ''
     for name in record.value:
@@ -49,3 +47,28 @@ def updateRecord(data, record: Record, fields):
     new = Record(getRecord(data, record.position / recordSize), fields, record.position)
     print('Here is the updated record')
     new.printRecord()
+
+def addRecord(data, fields):
+    setGlobals(fields)
+    final = ''
+    for name in fields:
+        if name != 'totalRecordSize' and name != 'numRecords':
+            print('Please enter a value for ' + name)
+            field = input()
+            if len(field) > fields[name]:
+                write = field[:fields[name]]
+            else:
+                write = field
+                while(range(fields[name] - len(write))):
+                    write = write + '-'
+            final += write
+    num = data.seek(0, 2)
+    data.write(final + '\n')
+    new = Record(getRecord(data, num / recordSize), fields, num)
+    print('Here is the new record')
+    new.printRecord()
+            
+def setGlobals(fields):
+    global numRecords, recordSize
+    numRecords = fields['numRecords']
+    recordSize = fields['totalRecordSize']
