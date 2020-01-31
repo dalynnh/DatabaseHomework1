@@ -23,13 +23,13 @@ def main():
     elif choice == '4':
         database.displayRecord()
     elif choice == '5':
-        print('Update record')
+        database.updateRecord()
     elif choice == '6':
         print('Create report')
     elif choice == '7':
-        print('Add record')
+        database.addRecord()
     elif choice == '8':
-        print('Delete record')
+        database.deleteRecord()
     elif choice == '9':
         global run
         run = False

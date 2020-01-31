@@ -1,3 +1,5 @@
+from record import *
+
 numRecords = 0
 recordSize = 0
 
@@ -11,20 +13,17 @@ def getRecord(data, recordNum):
 
 def binarySearch(data, name, fields):
     global numRecords, recordSize
-    print(fields)
     numRecords = fields['numRecords']
     recordSize = fields['totalRecordSize']
     low = 0
     high = numRecords - 1
     record = ''
     while high >= low:
-        print(low)
-        print(high)
         middle = int((low + high) / 2)
         record = getRecord(data, middle)
         recordName = record[4:38].replace('-', '').lower()
         if recordName == name:
-            return record
+            return Record(record, fields, middle * recordSize)
         elif recordName < name:
             low = middle + 1
         else: 
@@ -33,11 +32,17 @@ def binarySearch(data, name, fields):
 
 def linearSearch(data, name, fields):
     return False
-    
-def printRecord(record, fields):
-    count = 0
-    for name in fields:
-        if name != 'totalRecordSize' and name != 'numRecords':
-            value = record[count:fields[name] + count].replace('-', '')
-            print(name + ': ' + value)
-            count += fields[name]
+
+def updateRecord(data, record, fields):
+    record.updateRecord()
+    final = ''
+    for name in record.value:
+        if len(record.value[name]) > fields[name]:
+            write = record.value[name][:fields[name]]
+        else:
+            write = record.value[name]
+            while(range(fields[name] - len(write))):
+                write = write + '-'
+        final += write
+    data.seek(record.position)
+    data.write(final)

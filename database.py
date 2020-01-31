@@ -4,6 +4,7 @@ data = None
 config = None
 overflow = None
 databaseName = ''
+fields = {}
 
 def createDB():
     print('Which csv file would you like to create the database out of?')
@@ -52,9 +53,9 @@ def openDB():
     else:
         print('Which database would you like to open?')
         databaseName = input()
-        data = open(databaseName + '.data')
-        config = open(databaseName + '.config')
-        overflow = open(databaseName + '.overflow')
+        data = open(databaseName + '.data', 'r+')
+        config = open(databaseName + '.config', 'r+')
+        overflow = open(databaseName + '.overflow', 'r+')
 
 def closeDB():
     global data, config, overflow, databaseName
@@ -71,24 +72,51 @@ def closeDB():
         print('There are no databases currently open.')
 
 def displayRecord():
-    global data, config, overflow
-    fields = {}
-    config.seek(0)
-    for line in config.readlines():
-        lineArr = line.split(',')
-        fields[lineArr[0]] = int(lineArr[1])
-    print(fields)
+    global data, config, overflow, fields
     if data:
+        setFields()
         print('Enter the name of the record you would like to search for. Limited to 35 characters.')
         name = input().lower()
         record = helper.binarySearch(data, name, fields)
         if record:
-            helper.printRecord(record, fields)
+            record.printRecord()
         else:
-            record = helper.linearSearch(data, name, fields)
+            record = helper.linearSearch(overflow, name, fields)
             if record:
-                helper.printRecord(record, fields)
+                record.printRecord()
             else:
                 print('No record was found with name (' + name + ')')
     else:
         print('There are no databases currently open. Please open a database to display a record.')
+
+def updateRecord():
+    global data, config, overflow, fields
+    if data:
+        setFields()
+        print('Enter the name of the record you would like to update. Limited to 35 characters.')
+        name = input().lower()
+        record = helper.binarySearch(data, name, fields)
+        if record:
+            helper.updateRecord(data, record, fields)
+        else:
+            record = helper.linearSearch(overflow, name, fields)
+            if record:
+                helper.updateRecord(overflow, record, fields)
+            else:
+                print('No record was found with name (' + name + ')')
+    else:
+        print('There are no databases currently open. Please open a database to display a record.')
+
+def addRecord():
+    pass
+
+def deleteRecord():
+    pass
+
+def setFields():
+    global fields, config
+    if not fields:
+        config.seek(0)
+        for line in config.readlines():
+            lineArr = line.split(',')
+            fields[lineArr[0]] = int(lineArr[1])
