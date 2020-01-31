@@ -77,15 +77,11 @@ def displayRecord():
         setFields()
         print('Enter the name of the record you would like to search for. Limited to 35 characters.')
         name = input().lower()
-        record = helper.binarySearch(data, name, fields)
+        record = helper.searchRecord(data, overflow, name, fields)
         if record:
             record.printRecord()
         else:
-            record = helper.linearSearch(overflow, name, fields)
-            if record:
-                record.printRecord()
-            else:
-                print('No record was found with name (' + name + ')')
+            print('No record was found with name (' + name + ')')
     else:
         print('There are no databases currently open. Please open a database to display a record.')
 
@@ -95,23 +91,19 @@ def updateRecord():
         setFields()
         print('Enter the name of the record you would like to update. Limited to 35 characters.')
         name = input().lower()
-        record = helper.binarySearch(data, name, fields)
+        record = helper.searchRecord(data, overflow, name, fields)
         if record:
             helper.updateRecord(data, record, fields)
         else:
-            record = helper.linearSearch(overflow, name, fields)
-            if record:
-                helper.updateRecord(overflow, record, fields)
-            else:
-                print('No record was found with name (' + name + ')')
+            print('No record was found with name (' + name + ')')
     else:
         print('There are no databases currently open. Please open a database to update a record.')
 
 def addRecord():
-    global overflow, fields
+    global data, overflow, fields
     if overflow:
         setFields()
-        helper.addRecord(overflow, fields)
+        helper.addRecord(data, overflow, fields)
     else:
         print('There are no databases currently open. Please open a database to add a record.')
 
