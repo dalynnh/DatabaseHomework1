@@ -33,7 +33,7 @@ def binarySearch(data, name, fields):
 def linearSearch(data, name, fields):
     return False
 
-def updateRecord(data, record, fields):
+def updateRecord(data, record: Record, fields):
     record.updateRecord()
     final = ''
     for name in record.value:
@@ -46,3 +46,6 @@ def updateRecord(data, record, fields):
         final += write
     data.seek(record.position)
     data.write(final)
+    new = Record(getRecord(data, record.position / recordSize), fields, record.position)
+    print('Here is the updated record')
+    new.printRecord()
