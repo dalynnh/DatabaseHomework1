@@ -1,5 +1,5 @@
 class Record:
-    def __init__(self, record, fields, position):
+    def __init__(self, record, fields, position, overflow):
         count = 0
         for name in fields:
             if name != 'totalRecordSize' and name != 'numRecords':
@@ -7,7 +7,9 @@ class Record:
                 count += fields[name]
                 self.value[name] = value
         self.position = position
+        self.overflow = overflow
     
+    overflow = False
     position = 0
     value = {}
 

@@ -100,20 +100,31 @@ def updateRecord():
         print('There are no databases currently open. Please open a database to update a record.')
 
 def addRecord():
-    global data, overflow, fields
+    global data, overflow, config, fields
     if overflow:
         setFields()
-        helper.addRecord(data, overflow, fields)
+        helper.addRecord(data, overflow, config, fields)
     else:
         print('There are no databases currently open. Please open a database to add a record.')
 
 def deleteRecord():
-    pass
+    global data, overflow, config, fields
+    if data:
+        setFields()
+        print('Enter the name of the record you would like to delete. Limited to 35 characters.')
+        name = input().lower()
+        record = helper.searchRecord(data, overflow, name, fields)
+        if record:
+            helper.deleteRecord(data, overflow, config, record, fields)
+        else:
+            print('No record was found with name (' + name + ')')
+    else:
+        print('There are no databases currently open. Please open a database to delete a record.')
 
 def setFields():
     global fields, config
     if not fields:
         config.seek(0)
         for line in config.readlines():
-            lineArr = line.split(',')
-            fields[lineArr[0]] = int(lineArr[1])
+            name, value = line.split(',')
+            fields[name] = int(value)
