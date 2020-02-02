@@ -57,7 +57,7 @@ def updateRecord(data, record, fields):
             write = record.value[name][:fields[name]]
         else:
             write = record.value[name]
-            while(range(fields[name] - len(write))):
+            while (range(fields[name] - len(write))):
                 write = write + '-'
         final += write
     data.seek(record.position)
@@ -130,12 +130,39 @@ def recordName(record):
     return record[4:38].replace('-', '').lower()
 
 def deleteRecord(data, overflow, config, record, fields):
+    name = record.value['name'] + '(deleted)'
+    if len(name) > fields['name']:
+        write = name[:fields['name']]
+    else:
+        write = name
+        for _ in range(fields['name'] - len(name)):
+            write += '-'
     if record.overflow:
         overflow.seek(record.position)
-        overflow.write('')
+        writeDeleted(overflow, write, fields)
+        overflow.seek(record.position)
+        overflow.readline()
     else: 
         data.seek(record.position)
-        data.write('')
+        writeDeleted(data, write, fields)
+        data.seek(record.position)
+        data.readline()
+    pos = config.seek(0, 2) - 14
+    config.seek(pos)
+    num = config.readline().split(',')
+    config.seek(pos)
+    config.write('numRecords' + ',' + str(int(num[1]) - 1))
+    config.seek(0)
+    config.read()
+    
+
+def writeDeleted(data, write, fields):
+    for field in fields:
+        if field != 'totalRecordSize' and field != 'numRecords' and field != 'name':
+            for _ in range(fields[field]):
+                data.write(' ')
+        elif field == 'name':
+            data.write(write)
             
 def setGlobals(fields):
     global numRecords, recordSize
