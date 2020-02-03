@@ -119,6 +119,8 @@ def createReport():
     else:
         print('There are no databases currently open. Please open a database to create a report.')
 
+    report.close()
+
 def addRecord():
     global data, overflow, config, fields
     if overflow:
