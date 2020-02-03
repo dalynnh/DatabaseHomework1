@@ -25,7 +25,7 @@ def main():
     elif choice == '5':
         print('Update record')
     elif choice == '6':
-        database.createReport()1
+        database.createReport()
     elif choice == '7':
         print('Add record')
     elif choice == '8':

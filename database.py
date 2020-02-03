@@ -88,7 +88,15 @@ def displayRecord():
 def createReport():
     global data, config, overflow
 
-    report = open(report.txt,'w')
+    report = open('report.txt','w')
 
     for i in range(10):
+        line = data.readline()
+        rank = line[:4]
+        name = line[5:39]
+        city = line[40:69]
+        state = line[70:71]
         
+        report.write()
+
+    print('Report created.')
