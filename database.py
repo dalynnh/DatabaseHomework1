@@ -4,6 +4,7 @@ data = None
 config = None
 overflow = None
 databaseName = ''
+fields = {}
 
 def createDB():
     print('Which csv file would you like to create the database out of?')
@@ -52,9 +53,9 @@ def openDB():
     else:
         print('Which database would you like to open?')
         databaseName = input()
-        data = open(databaseName + '.data')
-        config = open(databaseName + '.config')
-        overflow = open(databaseName + '.overflow')
+        data = open(databaseName + '.data', 'r+')
+        config = open(databaseName + '.config', 'r+')
+        overflow = open(databaseName + '.overflow', 'r+')
 
 def closeDB():
     global data, config, overflow, databaseName
@@ -71,32 +72,79 @@ def closeDB():
         print('There are no databases currently open.')
 
 def displayRecord():
-    global data, config, overflow
-    fields = {}
+    global data, overflow, fields
     if data:
+        setFields()
         print('Enter the name of the record you would like to search for. Limited to 35 characters.')
-        name = input()
-        for line in config.readlines():
-            lineArr = line.split(',')
-            fields[lineArr[0]] = int(lineArr[1])
-        if not helper.binarySearch(data, name, fields):
-            if not helper.linearSearch(overflow, name):
-                print('Could not find record.')
+        name = input().lower()
+        record = helper.searchRecord(data, overflow, name, fields)
+        if record:
+            record.printRecord()
+        else:
+            print('No record was found with name (' + name + ')')
     else:
         print('There are no databases currently open. Please open a database to display a record.')
 
+def updateRecord():
+    global data, overflow, fields
+    if data:
+        setFields()
+        print('Enter the name of the record you would like to update. Limited to 35 characters.')
+        name = input().lower()
+        record = helper.searchRecord(data, overflow, name, fields)
+        if record:
+            helper.updateRecord(data, record, fields)
+        else:
+            print('No record was found with name (' + name + ')')
+    else:
+        print('There are no databases currently open. Please open a database to update a record.')
+
 def createReport():
-    global data, config, overflow
+    global data, config, overflow, fields
 
     report = open('report.txt','w')
 
-    for i in range(10):
-        line = data.readline()
-        rank = line[:4]
-        name = line[5:39]
-        city = line[40:69]
-        state = line[70:71]
-        
-        report.write()
+    if data:
+        for i in range(10):
+            line = data.readline()
+            rank = line[:4].replace('-','')
+            name = line[4:39].replace('-','')
+            city = line[39:59].replace('-','')
+            state = line[59:61].replace('-','')
+            zipCode = line[61:66].replace('-','')
+            numEmployees = line[66:].replace('-','')
+            report.write('Record {}\n   Rank: {}\n   Name: {}\n   City: {}\n   State: {}\n   Zip Code: {}\n   Number of Employees: {}\n'.format(i + 1, rank, name, city, state, zipCode, numEmployees))
 
-    print('Report created.')
+        print('Report created.')
+    else:
+        print('There are no databases currently open. Please open a database to create a report.')
+
+def addRecord():
+    global data, overflow, config, fields
+    if overflow:
+        setFields()
+        helper.addRecord(data, overflow, config, fields)
+    else:
+        print('There are no databases currently open. Please open a database to add a record.')
+
+def deleteRecord():
+    global data, overflow, config, fields
+    if data:
+        setFields()
+        print('Enter the name of the record you would like to delete. Limited to 35 characters.')
+        name = input().lower()
+        record = helper.searchRecord(data, overflow, name, fields)
+        if record:
+            helper.deleteRecord(data, overflow, config, record, fields)
+        else:
+            print('No record was found with name (' + name + ')')
+    else:
+        print('There are no databases currently open. Please open a database to delete a record.')
+
+def setFields():
+    global fields, config
+    if not fields:
+        config.seek(0)
+        for line in config.readlines():
+            name, value = line.split(',')
+            fields[name] = int(value)

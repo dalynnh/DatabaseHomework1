@@ -1,0 +1,80 @@
+Record 1
+   Rank: 94
+   Name: 3M
+   City: MAPLEWOOD
+   State: MN
+   Zip Code: 55144
+   Number of Employees: 91584
+
+Record 2
+   Rank: 395
+   Name: AMARK PRECIOUS METALS
+   City: PHILADELPHIA
+   State: PA
+   Zip Code: 19107
+   Number of Employees: 83000
+
+Record 3
+   Rank: 135
+   Name: ABBOTT LABORATORIES
+   City: SANTA MONICA
+   State: CA
+   Zip Code: 90401
+   Number of Employees: 75000
+
+Record 4
+   Rank: 111
+   Name: ABBVIE
+   City: NORTH CHICAGO
+   State: IL
+   Zip Code: 60064
+   Number of Employees: 30000
+
+Record 5
+   Rank: 500
+   Name: ABM INDUSTRIES
+   City: NEW YORK
+   State: NY
+   Zip Code: 10176
+   Number of Employees: 110000
+
+Record 6
+   Rank: 406
+   Name: ACTIVISION BLIZZARD
+   City: SANTA MONICA
+   State: CA
+   Zip Code: 90405
+   Number of Employees: 9500
+
+Record 7
+   Rank: 443
+   Name: ADOBE SYSTEMS
+   City: MCLEAN
+   State: VA
+   Zip Code: 22102
+   Number of Employees: 15706
+
+Record 8
+   Rank: 240
+   Name: ADP
+   City: ROSELAND
+   State: NJ
+   Zip Code: 07068
+   Number of Employees: 57000
+
+Record 9
+   Rank: 292
+   Name: ADVANCE AUTO PARTS
+   City: ROANOKE
+   State: VA
+   Zip Code: 24012
+   Number of Employees: 57500
+
+Record 10
+   Rank: 161
+   Name: AECOM
+   City: LOS ANGELES
+   State: CA
+   Zip Code: 90067
+   Number of Employees: 87000
+
