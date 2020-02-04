@@ -18,6 +18,9 @@ def createDB():
         'employee': 10,
         'totalRecordSize': 77
     }
+    list = []
+    for i in fields.items():
+        list.append(i)
     numRecords = 0
     csvFile = open(csvFilename + '.csv', 'r')
     data = open(csvFilename + '.data', 'w')
@@ -39,8 +42,9 @@ def createDB():
     data.close()
     csvFile.close()
     config = open(csvFilename + '.config', 'w')
-    for name in fields:
-        config.write(name + ',' + str(fields[name]) + '\n')
+    for i in range(len(list)):
+        name, value = list[i]
+        config.write(name + ',' + str(value) + '\n')
     config.write('numRecords,' + str(numRecords))
     config.close()
     overflow = open(csvFilename + '.overflow', 'w')
