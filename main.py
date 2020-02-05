@@ -1,40 +1,43 @@
 import database
 
+
 def printMenu():
-    print('1) Create new database')
-    print('2) Open database')
-    print('3) Close database')
-    print('4) Display record')
-    print('5) Update record')
-    print('6) Create report')
-    print('7) Add record')
-    print('8) Delete record')
-    print('9) Quit')
+    print("1) Create new database")
+    print("2) Open database")
+    print("3) Close database")
+    print("4) Display record")
+    print("5) Update record")
+    print("6) Create report")
+    print("7) Add record")
+    print("8) Delete record")
+    print("9) Quit")
+
 
 def main():
     printMenu()
     choice = input()
-    if choice == '1':
+    if choice == "1":
         database.createDB()
-    elif choice == '2':
+    elif choice == "2":
         database.openDB()
-    elif choice == '3':
+    elif choice == "3":
         database.closeDB()
-    elif choice == '4':
+    elif choice == "4":
         database.displayRecord()
-    elif choice == '5':
+    elif choice == "5":
         database.updateRecord()
-    elif choice == '6':
+    elif choice == "6":
         database.createReport()
-    elif choice == '7':
+    elif choice == "7":
         database.addRecord()
-    elif choice == '8':
+    elif choice == "8":
         database.deleteRecord()
-    elif choice == '9':
+    elif choice == "9":
         global run
         run = False
     else:
-        print('Choice not valid')
+        print("Choice not valid")
+
 
 run = True
 while run:
