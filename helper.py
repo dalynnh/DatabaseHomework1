@@ -57,7 +57,7 @@ def linearSearch(data, name, fieldNames, fieldValues):
 def updateRecord(data, record, fieldNames, fieldValues):
     record.updateRecord()
     final = ""
-    for i in range(len(fieldNames)):
+    for i in range(len(record.values)):
         if len(record.values[i]) > fieldValues[i]:
             write = record.values[i][: fieldValues[i]]
         else:
