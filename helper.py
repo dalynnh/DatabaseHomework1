@@ -48,7 +48,7 @@ def linearSearch(data, name, fieldNames, fieldValues):
     data.seek(0)
     for line in data.readlines():
         record = Record(line, fieldNames, fieldValues, pos, True)
-        if record.value["name"].lower() == name.lower():
+        if record.names[1].lower() == name.lower():
             return record
         pos += recordSize
     return False
@@ -57,16 +57,14 @@ def linearSearch(data, name, fieldNames, fieldValues):
 def updateRecord(data, record, fieldNames, fieldValues):
     record.updateRecord()
     final = ""
-    i = 0
-    for name in record.value:
-        if len(record.value[name]) > fieldValues[i]:
-            write = record.value[name][: fieldValues[i]]
+    for i in range(len(record.names)):
+        if len(record.values[i]) > fieldValues[i]:
+            write = record.values[i][: fieldValues[i]]
         else:
-            write = record.value[name]
+            write = record.values[i]
             while range(fieldValues[i] - len(write)):
                 write = write + "-"
         final += write
-        i += 1
     data.seek(record.position)
     data.write(final)
     new = Record(
@@ -147,7 +145,7 @@ def recordName(record):
 
 
 def deleteRecord(data, overflow, config, record, fieldNames, fieldValues):
-    name = record.value["name"] + "(deleted)"
+    name = record.values[1] + "(deleted)"
     if len(name) > fieldValues[1]:
         write = name[: fieldValues[1]]
     else:
