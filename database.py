@@ -175,4 +175,4 @@ def setFields():
         for line in config.readlines():
             name, value = line.split(",")
             fieldNames.append(name)
-            fieldValues.append(value)
+            fieldValues.append(int(value))
