@@ -1,26 +1,28 @@
 class Record:
-    def __init__(self, record, fields, position, overflow):
+    def __init__(self, record, fieldNames, fieldValues, position, overflow):
         count = 0
-        for name in fields:
-            if name != 'totalRecordSize' and name != 'numRecords':
-                value = record[count:fields[name] + count].replace('-', '')
-                count += fields[name]
-                self.value[name] = value
+        for i in fieldNames:
+            if fieldNames[i] != 'totalRecordSize' and fieldNames[i] != 'numRecords':
+                value = record[count:fieldValues[i]] + count].replace('-', '')
+                count += fieldValues[i]
+                self.names.append(fieldNames[i])
+                self.values.append(value)
         self.position = position
         self.overflow = overflow
     
     overflow = False
     position = 0
-    value = {}
+    names = []
+    values = []
 
     def printRecord(self):
-        for name in self.value:
-            print('{}: {}'.format(name, self.value[name]))
+        for i in range(self.values):
+            print('{}: {}'.format(self.names[i], self.values[i]))
 
     def updateRecord(self):
-        for name in self.value:
-            if name != 'name':
-                print('The current {} is {}. Enter the new value or just press enter for no change.'.format(name, self.value[name]))
+        for i in range(self.values):
+            if self.names[i] != 'name':
+                print('The current {} is {}. Enter the new value or just press enter for no change.'.format(self.names[i], self.values[i]))
                 update = input()
                 if update != '':
-                    self.value[name] = update
+                    self.values[i] = update
