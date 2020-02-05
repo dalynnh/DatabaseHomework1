@@ -3,7 +3,7 @@ class Record:
         count = 0
         for i in fieldNames:
             if fieldNames[i] != 'totalRecordSize' and fieldNames[i] != 'numRecords':
-                value = record[count:fieldValues[i]] + count].replace('-', '')
+                value = record[count:fieldValues[i] + count].replace('-', '')
                 count += fieldValues[i]
                 self.names.append(fieldNames[i])
                 self.values.append(value)
