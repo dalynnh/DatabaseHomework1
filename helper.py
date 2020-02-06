@@ -176,7 +176,7 @@ def writeDeleted(data, write, fieldNames, fieldValues):
         if fieldNames[i] != "totalRecordSize" and fieldNames[i] != "numRecords" and fieldNames[i] != "name":
             for _ in range(fieldValues[i]):
                 data.write(" ")
-        elif field == "name":
+        elif fieldNames[i] == "name":
             data.write(write)
 
 
