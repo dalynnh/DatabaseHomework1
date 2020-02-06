@@ -48,7 +48,7 @@ def linearSearch(data, name, fieldNames, fieldValues):
     data.seek(0)
     for line in data.readlines():
         record = Record(line, fieldNames, fieldValues, pos, True)
-        if record.names[1].lower() == name.lower():
+        if record.values[1].lower() == name.lower():
             return record
         pos += recordSize
     return False
@@ -146,6 +146,7 @@ def recordName(record):
 
 def deleteRecord(data, overflow, config, record, fieldNames, fieldValues):
     name = record.values[1] + "(deleted)"
+    record.values[1] = name
     if len(name) > fieldValues[1]:
         write = name[: fieldValues[1]]
     else:
